@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ottello/pkg/config"
-	"github.com/ottello/pkg/handlers"
-	"github.com/ottello/pkg/render"
+	"github.com/ottello/internal/config"
+	"github.com/ottello/internal/handlers"
+	"github.com/ottello/internal/render"
 
 	"github.com/alexedwards/scs/v2"
 )

@@ -3,8 +3,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/ottello/pkg/config"
-	"github.com/ottello/pkg/handlers"
+	"github.com/ottello/internal/config"
+	"github.com/ottello/internal/handlers"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -19,6 +19,17 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
+
+	mux.Get("/room1", handlers.Repo.Room1)
+	mux.Get("/room2", handlers.Repo.Room2)
+
+	mux.Get("/make-reservation", handlers.Repo.MakeReservation)
+
+	mux.Get("/search-availability", handlers.Repo.GetSearchAvailability)
+	mux.Post("/search-availability", handlers.Repo.PostSearchAvailability)
+	mux.Post("/search-availability-json", handlers.Repo.AvailabilityJson)
+
+	mux.Get("/contact", handlers.Repo.Contact)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

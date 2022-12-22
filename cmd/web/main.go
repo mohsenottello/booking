@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	"github.com/ottello/internal/config"
 	"github.com/ottello/internal/handlers"
+	"github.com/ottello/internal/models"
 	"github.com/ottello/internal/render"
 
 	"github.com/alexedwards/scs/v2"
@@ -20,6 +22,10 @@ var session *scs.SessionManager
 
 // main is main function of application
 func main() {
+	// waht we want to store in seesion
+
+	gob.Register(models.Reservation{})
+
 	app.InProduction = false
 
 	session = scs.New()

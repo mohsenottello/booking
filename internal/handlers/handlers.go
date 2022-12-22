@@ -75,6 +75,10 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 			Data: data,
 		})
 	}
+
+	m.App.Session.Put(r.Context(), "reservation", reservation)
+
+	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 }
 
 // Home is Make reservation page handler
@@ -138,5 +142,18 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
+	})
+}
+
+func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
+	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
+	if !ok {
+		log.Println("Cannot get session")
+		return
+	}
+	data := make(map[string]interface{})
+	data["reservation"] = reservation
+	render.RenderTemplate(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+		Data: data,
 	})
 }
